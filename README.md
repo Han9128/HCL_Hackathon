@@ -78,7 +78,7 @@ Register Customer 1
 - Body: (Raw JSON)
 ```json
 {
-  "email": "alice@bank.com",
+  "email": "alice@bankd.com",
   "password": "alice123",
   "full_name": "Alice Johnson",
   "phone": "+1111111111",
@@ -93,7 +93,7 @@ Register Customer 2
 - Body:
 ```json
 {
-  "email": "bob@bank.com",
+  "email": "bob@banke.com",
   "password": "bob123", 
   "full_name": "Bob Smith",
   "phone": "+1222222222",
@@ -108,7 +108,7 @@ Register Customer 2
 - Body:
 ```json
 {
-  "email": "alice@bank.com",
+  "email": "alice@bankd.com",
   "password": "alice123"
 }
 ```
@@ -164,7 +164,7 @@ Register Customer 2
 - Body:
 ```json
 {
-  "email": "admin@smartbank.com",
+  "email": "admin@smartbankd.com",
   "password": "admin123",
   "full_name": "Bank Manager",
   "phone": "+1999999999",
@@ -179,7 +179,7 @@ Register Customer 2
 - Body:
 ```json
 {
-  "email": "admin@smartbank.com",
+  "email": "admin@smartbankd.com",
   "password": "admin123"
 }
 ```
@@ -192,7 +192,7 @@ Register Customer 2
 
 #### Verify Documents (Admin)
 - Method: POST
-- URL: `http://127.0.0.1:8000/admin/verify/1` 
+- URL: `http://127.0.0.1:8000/admin/verify/1` (replace 1 with your id)
 - Headers: `Authorization: Bearer ADMIN_ACCESS_TOKEN_HERE`
 
 #### Verify Second Document
