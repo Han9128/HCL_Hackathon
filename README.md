@@ -61,14 +61,14 @@ The objective is to build a user registration and kyc achieving the following fu
 
 ## Setup & Execution
 1. clone the repository using `git clone https://github.com/Han9128/HCL_Hackathon.git`
-2. 2. switch to smartBank folder using `cd smartBank`
-1. Run `init_db.py` to initialize database tables
-2. Start the FastAPI server: `uvicorn main:app --reload`
-3. Use `examples run` for comprehensive API testing scenarios
-4. Access API documentation at `http://127.0.0.1:8000/docs`
+2. switch to smartBank folder using `cd smartBank`
+3. Go to `database.py` and put your supabase url, it will be something like `postgresql://postgres:[your-password]L@db.wtnjjayobyhhswynbfce.supabase.co:5432/postgres` paste your password at the password.
+4. Run `init_db.py` to initialize database tables
+5. Start the FastAPI server: `uvicorn main:app --reload`
+6. Use `examples run` for comprehensive API testing scenarios
+7. Access API documentation at `http://127.0.0.1:8000/docs`
 
 ### Example run
-
 
 Register Customer 1
 - Method: POST
