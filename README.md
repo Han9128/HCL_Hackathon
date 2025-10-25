@@ -21,7 +21,7 @@ FastAPI, PostgreSQL, JWT Auth
 
 5. Admin approval system
 
-## Core Endpoints to Build
+## Core Endpoints we will build
 
 ### Authentication Routes
 - `POST /auth/register` - New user registration
