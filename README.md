@@ -45,3 +45,149 @@ FastAPI, PostgreSQL, JWT Auth
 - `PUT /admin/kyc/{user_id}/reject` - Reject KYC
 
 
+### Example run
+
+
+Register Customer 1
+- Method: POST
+- URL: `http://127.0.0.1:8000/auth/signup`
+- Headers: 
+  - `Content-Type: application/json`
+- Body: (Raw JSON)
+```json
+{
+  "email": "alice@bank.com",
+  "password": "alice123",
+  "full_name": "Alice Johnson",
+  "phone": "+1111111111",
+  "role": "CUSTOMER"
+}
+```
+
+Register Customer 2
+- Method: POST
+- URL: `http://127.0.0.1:8000/auth/signup`
+- Headers: `Content-Type: application/json`
+- Body:
+```json
+{
+  "email": "bob@bank.com",
+  "password": "bob123", 
+  "full_name": "Bob Smith",
+  "phone": "+1222222222",
+  "role": "CUSTOMER"
+}
+```
+
+### Customer Login (GET TOKEN)
+- Method: POST
+- URL: `http://127.0.0.1:8000/auth/login`
+- Headers: `Content-Type: application/json`
+- Body:
+```json
+{
+  "email": "alice@bank.com",
+  "password": "alice123"
+}
+```
+**SAVE THE ACCESS TOKEN** 
+
+### KYC Document Submission
+
+#### Submit KYC Documents (with Auth)
+- Method: POST
+- URL: `http://127.0.0.1:8000/kyc/documents`
+- Headers: 
+  - `Content-Type: application/json`
+  - `Authorization: Bearer YOUR_ACCESS_TOKEN_HERE` 
+- Body:
+```json
+{
+  "document_type": "AADHAAR",
+  "document_number": "1234-5678-9012",
+  "document_image_url": "https://bank.com/documents/alice_aadhaar.jpg"
+}
+```
+**Save Response:** Note the document ID
+
+#### Submit Second Document
+- Method: POST
+- URL: `http://127.0.0.1:8000/kyc/documents`
+- Headers: 
+  - `Content-Type: application/json`
+  - `Authorization: Bearer YOUR_ACCESS_TOKEN_HERE`
+- Body:
+```json
+{
+  "document_type": "PAN",
+  "document_number": "ABCDE1234F",
+  "document_image_url": "https://bank.com/documents/alice_pan.jpg"
+}
+```
+
+#### View Submitted Documents
+- Method: GET
+- URL: `http://127.0.0.1:8000/kyc/documents`
+- Headers: `Authorization: Bearer YOUR_ACCESS_TOKEN_HERE`
+
+#### Check KYC Status
+- Method: GET
+- URL: `http://127.0.0.1:8000/kyc/status`
+- Headers: `Authorization: Bearer YOUR_ACCESS_TOKEN_HERE`
+
+#### Register Admin User
+- Method: POST
+- URL: `http://127.0.0.1:8000/auth/signup`
+- Headers: `Content-Type: application/json`
+- Body:
+```json
+{
+  "email": "admin@smartbank.com",
+  "password": "admin123",
+  "full_name": "Bank Manager",
+  "phone": "+1999999999",
+  "role": "ADMIN"
+}
+```
+
+#### Admin Login (GET ADMIN TOKEN)
+- Method: POST
+- URL: `http://127.0.0.1:8000/auth/login`
+- Headers: `Content-Type: application/json`
+- Body:
+```json
+{
+  "email": "admin@smartbank.com",
+  "password": "admin123"
+}
+```
+**SAVE THE ADMIN ACCESS TOKEN**
+
+#### View Pending KYC (Admin)
+- Method: GET
+- URL: `http://127.0.0.1:8000/admin/`
+- Headers: `Authorization: Bearer ADMIN_ACCESS_TOKEN_HERE`
+
+#### Verify Documents (Admin)
+- Method: POST
+- URL: `http://127.0.0.1:8000/admin/verify/1` 
+- Headers: `Authorization: Bearer ADMIN_ACCESS_TOKEN_HERE`
+
+#### Verify Second Document
+- Method: POST
+- URL: `http://127.0.0.1:8000/admin/verify/2`
+- Headers: `Authorization: Bearer ADMIN_ACCESS_TOKEN_HERE`
+
+### Final Verification
+
+#### Check Final Status (as Customer)
+- Method: GET
+- URL: `http://127.0.0.1:8000/kyc/status`
+- Headers: `Authorization: Bearer CUSTOMER_ACCESS_TOKEN_HERE`
+
+#### View Verified Documents
+- Method: GET
+- URL: `http://127.0.0.1:8000/kyc/documents`
+- Headers: `Authorization: Bearer CUSTOMER_ACCESS_TOKEN_HERE`
+
+
