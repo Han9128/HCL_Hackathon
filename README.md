@@ -1,4 +1,4 @@
-# HCL_Hackathon
+# SmartBank KYC API - HCL Hackathon
 
 ## Objective:
 The objective is to build a user registration and kyc achieving the following functionality:
@@ -6,44 +6,66 @@ The objective is to build a user registration and kyc achieving the following fu
 2. Upload KYC documents (simulated)
 3. System validates and User profile
 
-### Tech Stack required
-FastAPI, PostgreSQL, JWT Auth
+### Tech Stack
+- **Backend**: FastAPI (Python)
+- **Database**: PostgreSQL (hosted on Supabase)
+- **Authentication**: JWT Tokens
+- **ORM**: SQLAlchemy
+- **Security**: Password hashing with Werkzeug
 
-### What will we be doing?
+## System Architecture
 
-1. User signup/login with JWT
+### Core Modules
+- **Authentication System** (`auth_routers.py`) - User registration, login, JWT management
+- **KYC Management** (`kyc_routers.py`) - Document submission and status tracking
+- **Admin Panel** (`admin_routers.py`) - KYC verification and approval system
+- **Data Models** (`models.py`) - Database schema definition
+- **API Validation** (`schemas.py`) - Request/response serialization
 
-2. Profile management
-
-3. Document upload simulation
-
-4. KYC status tracking (Pending/Approved/Rejected)
-
-5. Admin approval system
-
-## Core Endpoints we will build
+## API Endpoints
 
 ### Authentication Routes
-- `POST /auth/register` - New user registration
-- `POST /auth/login` - User login
-- `GET /auth/me` - Get current user
+- `POST /auth/signup` - New user registration
+- `POST /auth/login` - User login with JWT token generation
+- `GET /auth/refresh` - Refresh access token using refresh token
+- `GET /auth/` - Protected test endpoint
 
-### User Management
-- `GET /users/me` - Get user profile
-- `PUT /users/me` - Update profile
-- `PUT /users/me/password` - Change password
-
-### KYC Management
-- `POST /kyc/documents` - Submit KYC documents
-- `GET /kyc/status` - Check KYC status
-- `GET /kyc/documents` - Get uploaded documents
+### User KYC Management
+- `POST /kyc/documents` - Submit KYC documents (AADHAAR, PAN, PASSPORT, DRIVING_LICENSE)
+- `GET /kyc/documents` - Get user's submitted KYC documents
+- `GET /kyc/status` - Check overall KYC verification status
 
 ### Admin Routes
-- `GET /admin/users` - List all users
-- `GET /admin/kyc/pending` - Pending KYC applications
-- `PUT /admin/kyc/{user_id}/verify` - Approve KYC
-- `PUT /admin/kyc/{user_id}/reject` - Reject KYC
+- `GET /admin/` - View all pending KYC documents
+- `POST /admin/verify/{document_id}` - Approve specific KYC document
+- `POST /admin/reject/{document_id}` - Reject specific KYC document
 
+## Database Schema
+
+### Users Table
+- `id`, `email`, `password` (hashed), `full_name`, `phone`
+- `role` (CUSTOMER/ADMIN), `is_active`, `created_at`
+
+### KYC Documents Table
+- `id`, `document_type`, `document_number`, `document_image_url`
+- `status` (PENDING/VERIFIED/REJECTED), `submitted_at`, `user_id`
+
+
+## Workflow
+1. User registers via `/auth/signup`
+2. User logs in and obtains JWT token via `/auth/login`
+3. User submits KYC documents via `/kyc/documents`
+4. Admin reviews pending documents via `/admin/`
+5. Admin approves/rejects documents via `/admin/verify|reject/{id}`
+6. User checks verification status via `/kyc/status`
+
+## Setup & Execution
+1. clone the repository using `git clone https://github.com/Han9128/HCL_Hackathon.git`
+2. 2. switch to smartBank folder using `cd smartBank`
+1. Run `init_db.py` to initialize database tables
+2. Start the FastAPI server: `uvicorn main:app --reload`
+3. Use `examples run` for comprehensive API testing scenarios
+4. Access API documentation at `http://127.0.0.1:8000/docs`
 
 ### Example run
 
